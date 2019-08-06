@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/dummy_data.dart';
+import 'category_meals_screen.dart';
 
 class MealDetailScreen extends StatelessWidget {
   static const routeName = '/meal_detail';
@@ -33,6 +34,7 @@ class MealDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context).settings.arguments as String;
     final selectedMeal = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('${selectedMeal.title}'),
@@ -87,6 +89,16 @@ class MealDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.of(context).pop(mealId);
+        },
       ),
     );
   }
