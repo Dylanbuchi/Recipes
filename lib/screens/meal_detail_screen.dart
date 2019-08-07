@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/dummy_data.dart';
-import 'category_meals_screen.dart';
 
 class MealDetailScreen extends StatelessWidget {
   static const routeName = '/meal_detail';
+
+  final Function toggleFavorite;
+  Function isFavorite;
+
+  MealDetailScreen(this.toggleFavorite, this.isFavorite);
 
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
@@ -37,6 +41,18 @@ class MealDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          FloatingActionButton(
+            mini: true,
+            backgroundColor: Colors.red,
+            child: Icon(
+              isFavorite(mealId) ? Icons.favorite : Icons.favorite_border,
+              size: 25,
+              color: Colors.white,
+            ),
+            onPressed: () => toggleFavorite(mealId),
+          ),
+        ],
         title: Text('${selectedMeal.title}'),
       ),
       body: SingleChildScrollView(
@@ -89,16 +105,6 @@ class MealDetailScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
-        child: Icon(
-          Icons.delete,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          Navigator.of(context).pop(mealId);
-        },
       ),
     );
   }
